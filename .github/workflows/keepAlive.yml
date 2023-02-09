@@ -1,0 +1,23 @@
+name: keep alive
+
+on:
+  schedule:
+    - cron: '1 2 * * 3' # https://crontab.guru/#1_2_*_*_3
+  workflow_dispatch:
+
+jobs:
+  keep-alive:
+    name: Keep alive frog instance
+    runs-on: ubuntu-latest
+    steps:
+      - name: debug
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            whoami
+            hostname
+            uname -a
